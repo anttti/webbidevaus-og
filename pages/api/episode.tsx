@@ -22,14 +22,10 @@ export default async function handler(req: NextRequest) {
     const fontSemiBoldData = await fontSemiBold;
     const { searchParams } = new URL(req.url);
 
-    const hasNumber = searchParams.has("number");
-    const number = hasNumber ? searchParams.get("number") : "";
-    const hasTitle = searchParams.has("title");
-    const title = hasTitle
+    const number = searchParams.has("number") ? searchParams.get("number") : "";
+    const title = searchParams.has("title")
       ? searchParams.get("title")
       : "<jakson nimi puuttuu>";
-
-    console.log("searchParams", req.url);
 
     return new ImageResponse(
       (
@@ -84,7 +80,6 @@ export default async function handler(req: NextRequest) {
       }
     );
   } catch (e: any) {
-    console.log(`${e.message}`);
     return new Response(`Failed to generate the image`, {
       status: 500,
     });
